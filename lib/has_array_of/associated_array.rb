@@ -32,7 +32,7 @@ module HasArrayOf::AssociatedArray
         if ids.empty?
           all
         else
-          where "#{ids_attribute} @> ARRAY[?]", ids
+          where "#{ids_attribute} @> '{#{ids.join}}'"
         end
       end
 
@@ -41,7 +41,7 @@ module HasArrayOf::AssociatedArray
         if ids.empty?
           none
         else
-          where "#{ids_attribute} <@ ARRAY[?]", to_ids[args]
+          where "#{ids_attribute} <@ '{#{ids.join}}'"
         end
       end
 
@@ -50,7 +50,7 @@ module HasArrayOf::AssociatedArray
         if ids.empty?
           none
         else
-          where "#{ids_attribute} && ARRAY[?]", ids
+          where "#{ids_attribute} && '{#{ids.join}}'"
         end
       end
     end
